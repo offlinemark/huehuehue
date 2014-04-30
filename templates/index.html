@@ -12,9 +12,20 @@
     <div class="container">
         <h1>huehuehue</h1>
         <img src="../../static/huehuehue.jpg" class="img-rounded img-responsive">
-        <form action="/" method="post" role="form">
-            <input type="submit" name="off" class="btn btn-default" value="turn this shit off" />
-            <input type="submit" name="on" class="btn btn-default" value="turn this shit on" />
+        <form action="/" method="post" role="form" class="form-inline">
+            {% if not ip and not user %}
+            <p>Enter in your bridge ip and the user.</p>
+
+                <input type="text" name="ip" class="form-control" placeholder="bridge ip"/>
+                <input type="text" name="user" class="form-control" placeholder="user"/>
+            {% else %}
+
+                <input type="text" name="ip" class="form-control" value="{{ ip }}"/>
+                <input type="text" name="user" class="form-control" value="{{ user }}"/>
+            {% endif %}
+            <br><br>
+            <input type="submit" name="off" class="btn btn-default" value="off" />
+            <input type="submit" name="on" class="btn btn-default" value="on" />
         </form>
     </div>
 </body>

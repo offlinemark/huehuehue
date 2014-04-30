@@ -2,14 +2,16 @@
 
 from flask import Flask, render_template, request
 import pyhue
-import config as CFG
 
 app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
-        bridge = pyhue.Bridge(CFG.IP, CFG.USER)
+        ip = request.form['ip']
+        user = request.form['user']
+
+        bridge = pyhue.Bridge(ip, user)
 
         if 'off' in request.form.keys():
             for light in bridge.lights:
@@ -17,6 +19,8 @@ def home():
         if 'on' in request.form.keys():
             for light in bridge.lights:
                 light.on = True
+
+        return render_template('index.html', ip=ip, user=user)
 
     return render_template('index.html')
 
