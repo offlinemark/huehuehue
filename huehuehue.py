@@ -11,14 +11,21 @@ def home():
         ip = request.form['ip']
         user = request.form['user']
 
-        bridge = pyhue.Bridge(ip, user)
+        try:
+            bridge = pyhue.Bridge(ip, user)
 
-        if 'off' in request.form.keys():
-            for light in bridge.lights:
-                light.on = False
-        if 'on' in request.form.keys():
-            for light in bridge.lights:
-                light.on = True
+            if 'off' in request.form.keys():
+                for light in bridge.lights:
+                    light.on = False
+            elif 'on' in request.form.keys():
+                for light in bridge.lights:
+                    light.on = True
+            elif 'loop' in request.form.keys():
+                for light in bridge.lights:
+                    light.on = True
+                    light.effect = 'colorloop'
+        except:
+            pass
 
         return render_template('index.html', ip=ip, user=user)
 
